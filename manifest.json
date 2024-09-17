@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "name": "Video Recorder",
+    "version": "1.0",
+    "permissions": ["activeTab", "scripting"],
+    "icons": {
+      "48": "icon.png"
+    },
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ]
+  }

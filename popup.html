@@ -1,0 +1,69 @@
+<!-- https://www.clipmyhorse.tv/de_DE/ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Recorder</title>
+</head>
+<body>
+    <div class="status_header">
+        <h2 style="margin-right: 5px;">Status: </h2>
+        <h2 id="nereus_statusMessage">Not Recording</h2>
+    </div>
+    <input type="number" id="nereus_durationInput" placeholder="Duration in Minutes" />
+    <button id="nereus_recordButton" >Start Recording</button>
+    <p>To stop the recording early, pause the video</p>
+    
+    <div style="display: flex; gap: 5px; width: 100%">
+        <button id="nereus_dev" style="flex: 1;"> Dev </button>
+        <button id="nereus_controlsButton" style="flex: 1;">Controls</button>
+    </div>
+    <button id="nereus_resetButton">Reset Controls</button>
+    <script src="popup.js"></script>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 300px;
+        background-color: #f0f0f0;
+    }
+    button {
+        padding: 5px;
+        font-size: 14px;
+        background-color: #ffffff;
+        border: 1px solid #696969;
+        border-radius: 5px;
+    }
+    button:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+
+    .status_header {
+        display: flex;
+        align-items: center;
+    }
+
+    #nereus_statusMessage {
+        margin: 0;
+    }
+
+    #nereus_recordButton,
+    #nereus_stopButton {
+        padding: 10px;
+        margin-right: 10px;
+        font-size: 16px;
+        width: 100%;
+    }
+
+    #nereus_durationInput {
+        padding: 5px;
+        font-size: 16px;
+    }
+</style>
