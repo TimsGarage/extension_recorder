@@ -25,18 +25,25 @@ document.getElementById("nereus_controlsButton").addEventListener("click", async
             const video = document.querySelector('video');
             if (video) {
                 video.controls = true;
-                // video.parentElement.style.position = "relative";
                 const elements = Array.from(video.parentElement.children);
                 elements.forEach((element) => {
                     if (element !== video) {
                         element.remove();
                     }
                 });
-                // const button = document.createElement("button")
-                // button.textContent = "Clickedi"
-                // button.style.position = "absolute"
-                // button.style = "position: absolute; top: 0; right: 0;"
-                // video.parentElement.appendChild(button)
+            }
+        }
+    });
+});
+
+
+document.getElementById("nereus_dev").addEventListener("click", async function() {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: () => { 
+            const video = document.querySelector('video');
+            if (video) {
             }
         }
     });
@@ -94,11 +101,21 @@ recordButton.addEventListener('click', async () => {
 function startRecording(duration) {
     const video = document.querySelector('video');
     let recordingTimeout = undefined;
+    let displayedTimeout = undefined;
     
     if (!video) {
         alert('No video element found!');
         return;
     }
+
+    // Inject the timer
+    video.parentElement.style.position = "relative";
+    const timer = document.createElement("div")
+    timer.style.position = "absolute"
+    timer.style = "position: absolute; top: 5px; right: 5px; background-color: #000; color: #fff; padding: 5px; border-radius: 5px; z-index: 1000; opacity: 1; font-size: .85rem;"
+    video.parentElement.appendChild(timer)
+
+    timer.innerText = '0:00';
 
     const options = {
         mimeType: 'video/webm; codecs=vp8',
@@ -111,11 +128,30 @@ function startRecording(duration) {
     console.log("Recording till stop is pressed")
     if(duration != 0) {
         console.log("Recording for " + duration + " seconds")
+        let timeSeconds = duration * 60;
         recordingTimeout = setTimeout(() => {
             console.log("stopping")
             mediaRecorder.stop();
+            clearInterval(displayedTimeout);
+            timer.innerText = 'Stopped';
             chrome.runtime.sendMessage({ message: "stop recording" });
-        }, duration * 1000 * 60); // Convert seconds to milliseconds
+        }, timeSeconds * 1000); // Convert seconds to milliseconds
+        
+        let timeLeft = timeSeconds;
+        displayedTimeout = setInterval(() => {
+            timeLeft--;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timer.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }, 1000);
+    }else {
+        let timeRecording = 0;
+        displayedTimeout = setInterval(() => {
+            timeRecording++;
+            const minutes = Math.floor(timeRecording / 60);
+            const seconds = timeRecording % 60;
+            timer.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }, 1000);
     }
 
     mediaRecorder.ondataavailable = (event) => {
@@ -140,7 +176,11 @@ function startRecording(duration) {
         console.log("video stopped due to pause")
         mediaRecorder.stop();
         chrome.runtime.sendMessage({ message: "stop recording" });
-        if(recordingTimeout){ clearTimeout(recordingTimeout); }
+        if(recordingTimeout){ 
+            clearTimeout(recordingTimeout); 
+        }
+        clearInterval(displayedTimeout);
+        timer.innerText = 'Stopped';
     })
 
     mediaRecorder.start();
