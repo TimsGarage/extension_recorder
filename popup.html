@@ -7,64 +7,118 @@
 </head>
 <body>
     <div class="status_header">
-        <h2 style="margin-right: 5px;">Status: </h2>
-        <h2 id="nereus_statusMessage">Not Recording</h2>
+        <h4 style="margin-right: 5px;">Status: </h4>
+        <h4 id="nereus_statusMessage">Not Recording</h4>
     </div>
-    <input type="number" id="nereus_durationInput" placeholder="Duration in Minutes" />
-    <button id="nereus_recordButton" >Start Recording</button>
-    <button id="nereus_stopButton" disabled>Stop Recording</button>
-    <p>To stop the recording early, pause the video</p>
     
-    <div style="display: flex; gap: 5px; width: 100%">
-        <button id="nereus_dev" style="flex: 1;"> Dev </button>
-        <button id="nereus_controlsButton" style="flex: 1;">Controls</button>
+    <div class="main-controls">
+        <input type="number" id="nereus_durationInput" placeholder="Duration in Minutes" />
+        <button id="nereus_recordButton" >Start Recording</button>
+        <button id="nereus_stopButton" disabled>Stop Recording</button>
+        <p style="color: #777; text-align: center;">To stop the recording, you can also pause the video</p>
     </div>
-    <button id="nereus_resetButton">Reset Controls</button>
+
+    
+    <div class="dev-options">
+        <p>Dev Options</p>
+        <div style="display: flex; gap: 5px; width: 100%">
+            <button id="nereus_dev" style="flex: 1;"> Dev </button>
+            <button id="nereus_controlsButton" style="flex: 1;">Controls</button>
+        </div>
+        <button id="nereus_resetButton">Reset Controls</button>
+    </div>
+
+
     <script src="popup.js"></script>
 </body>
 </html>
 
 <style>
+    h1,h2,h3,h4,h5,p {
+        padding: 0;
+        margin: 0;
+    }
+    p {
+        font-size: .85rem; 
+    }
     body {
         font-family: Arial, sans-serif;
-        padding: 20px;
+        margin: 0;
         display: flex;
         flex-direction: column;
         gap: 5px;
         width: 300px;
-        background-color: #f0f0f0;
+        background-color: #dfdfdf;
     }
     button {
         padding: 5px;
-        font-size: 14px;
-        background-color: #ffffff;
-        border: 1px solid #696969;
-        border-radius: 5px;
+        font-size: 12px;
+        background-color: #dfdfdf;
+        border: none;
+        border-radius: 10px;
     }
     button:hover:not(:disabled) {
-        background-color: #f0f0f0;
+        background-color: #f8f8f8;
         cursor: pointer;
+    }
+    button:disabled{
+        opacity: .75;
+        cursor:not-allowed;
     }
 
     .status_header {
         display: flex;
         align-items: center;
+        height: 1rem;
+        padding: .5rem;
+        background-color: #333;
+        color: #eee;
     }
 
-    #nereus_statusMessage {
-        margin: 0;
+    .main-controls {
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+        padding: 1rem;
     }
 
     #nereus_recordButton,
     #nereus_stopButton {
-        padding: 10px;
+        padding: 15px;
         margin-right: 10px;
         font-size: 16px;
         width: 100%;
+        border: none;
+        border-radius: 2rem;
+        background-color: #333;
+        color: #eee;
+    }
+    #nereus_stopButton:hover:not(:disabled) {
+        background-color: #555;
+    }
+
+    #nereus_recordButton {
+        background-color: #cf2d2d;
+    }
+    #nereus_recordButton:hover:not(:disabled) {
+        background-color: #df0000;
     }
 
     #nereus_durationInput {
-        padding: 5px;
-        font-size: 16px;
+        padding: 10px;
+        margin: .5rem;
+        font-size: 14px;
+        border-radius: .5rem;
+        border: none;
     }
+
+    .dev-options {
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+        padding: .5rem 1rem;
+        color: #eee;
+        background-color: #555;
+    }
+
 </style>
