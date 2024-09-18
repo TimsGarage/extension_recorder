@@ -9,4 +9,4 @@
 ![alt text](img/Readme3.png) <br/>
 4. Select the repository folder and click add. <br/>
 5. Done. The Extension should appear here, as shown. <br/>
-![alt text](img/Readme1.png) <br/>
+![alt text](img/Readme4.png) <br/>
